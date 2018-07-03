@@ -3,17 +3,6 @@ const app = express();
 
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
-const pg = require('pg');
-const sha256 = require('js-sha256');
-
-const config = {
-  user: '',
-  host: '127.0.0.1',
-  database: 'tasklist',
-  port: 5432,
-};
-
-const db = new pg.Pool(config);
 
 const reactEngine = require('express-react-views').createEngine();
 app.set('views', __dirname + '/views');
@@ -25,25 +14,20 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(cookieParser());
 
-function getRoot(request, response) {
-	response.render('home');
-}
+// Trigger the setting up of routes for this particular express server
+require('./Routes')(app);
 
-function getNewUserForm(request, response) {
-  response.render('newuser');
-}
+// Handle the root route
+const User = require('./ModelUser');
+app.get('/', (request, response) => {
+  if (request.cookies['login']) {
+    let id = request.cookies['login'];
+    User.find(id, (result) => {
+      response.render('home', {name: result['name']});
+    });
+  } else {
+    response.render('home');
+  }
+});
 
-function createNewUser(request, response) {
-  response.redirect('/');
-}
-
-function login(request, response) {
-  response.redirect('/');
-}
-
-app.get('/new', getNewUserForm);
-app.post('/new', createNewUser);
-app.post('/login', login);
-app.get('/', getRoot);
-
-app.listen(3000, function(){console.log('Server started')});
+app.listen(3000, () => {console.log('Server started')});

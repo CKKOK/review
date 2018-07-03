@@ -9,7 +9,7 @@ class Home extends React.Component {
         <head />
         <body>
           <h1>Hello there</h1>
-            <form method="POST" action="/new">
+            <form method="POST" action="/users/new">
                 Name: <input name="name" type="text" /><br/>
                 Email: <input name="email" type="email" /><br/>
                 Password:<input name="password" type="password" /><br/>
