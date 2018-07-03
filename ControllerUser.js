@@ -1,4 +1,5 @@
 const User = require('./ModelUser');
+const Task = require('./ModelTask');
 
 function create(request, response) {
   // Extract all the relevant data out from the request body and pass it to the appropriate model function to create the user

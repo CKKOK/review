@@ -16,6 +16,10 @@ class Home extends React.Component {
   render() {
     // If the user is not logged in, display the login form.
     // If the user is logged in, display his name, his tasks, and a logout button.
+    let tasks = [];
+    if (this.props.name) {
+      tasks = this.props.tasks.map(entry => <li>{entry.task}</li>);
+    };
     return (
       <html>
         <head />
@@ -23,6 +27,7 @@ class Home extends React.Component {
           <h1>Hello there{this.props.name ? ', ' + this.props.name : ''}</h1>
           {!this.props.name ? <a href='/users/register'>Register<br/></a> : ''}
           {!this.props.name ? <LoginForm /> : <a href='/users/logout'>Logout</a>}
+          {!this.props.name ? '' : <ul>{tasks}</ul>}
         </body>
       </html>
     );

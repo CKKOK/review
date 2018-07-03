@@ -6,7 +6,6 @@ const sha256 = require('js-sha256');
 // Model
 function find(id, callback) {
   db.query('SELECT * FROM users WHERE id = $1', [id], (error, result) => {
-    console.log(result);
     callback(result.rows[0]);
   })
 }

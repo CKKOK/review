@@ -19,14 +19,17 @@ require('./Routes')(app);
 
 // Handle the root route
 const User = require('./ModelUser');
+const Task = require('./ModelTask');
 app.get('/', (request, response) => {
   if (request.cookies['login']) {
     let id = request.cookies['login'];
-    User.find(id, (result) => {
-      response.render('home', {name: result['name']});
+    Task.getAllTasksOfUser(id, (tasks) => {
+      User.find(id, (result) => {
+        response.render('Home', {name: result['name'], tasks: tasks});
+      });
     });
   } else {
-    response.render('home');
+    response.render('Home');
   }
 });
 

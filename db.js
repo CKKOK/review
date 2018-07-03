@@ -1,6 +1,6 @@
 const pg = require('pg');
 const config = {
-  user: 'kokcheekean',
+  user: 'ck',
   host: '127.0.0.1',
   database: 'tasklist',
   port: 5432,
