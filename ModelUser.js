@@ -25,7 +25,7 @@ function create(name, email, password, callback) {
   let queryString = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id';
   let values = [name, email, sha256(password)];
   db.query(queryString, values, (error, result) => {
-    callback(result.rows[0]['id']);
+    callback(error, result.rows[0]['id']);
   })
 };
 

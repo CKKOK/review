@@ -15,11 +15,14 @@ app.use(methodOverride('_method'));
 app.use(cookieParser());
 
 // Trigger the setting up of routes for this particular express server. We have to call the function here immediately and pass our express server into it. This is because this index.js file is the only file that nodejs will run when we do node index.js. Leaving the routes defined in Routes.js without calling them explicitly here will result in the routes never being set up because Routes.js is never called otherwise!
-require('./Routes')(app);
+const setupRoutesForTheExpressServer = require('./Routes');
+setupRoutesForTheExpressServer(app);
 
-// Handle the root route
+// The root route (homepage) requires functions from TWO models. This is for those who want to see how 'business logic' looks like, tying together data from multiple models to serve up something relevant to the user.
 const User = require('./ModelUser');
 const Task = require('./ModelTask');
+
+// Handle the root route
 app.get('/', (request, response) => {
   // If the user is logged in, find all tasks associated with the user...
   if (request.cookies['login']) {
