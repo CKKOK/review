@@ -3,10 +3,16 @@ const User = require('./ModelUser');
 
 function create(request, response) {
   // Extract all the relevant data out from the request body and pass it to the appropriate model function to create the user. Notice how there's no database querying here. That's left to the model functions. The controller's purpose here is to execute business logic and delegate the pulling of data to the relevant models. Some programmers elect to execute business logic in the models as well - whichever way keeps your code tidier and more readable is probably the right one!
-  User.create(request.body.name, request.body.email, request.body.password, (result) => {
-    response.cookie('login', result);
-    response.redirect('/');
-  });
+  function callback(error, result) {
+    if (error) {
+      console.log(error.message);
+    } else {
+      response.cookie('login', result);
+      response.redirect('/');
+    }
+  };
+
+  User.create(request.body.name, request.body.email, request.body.password, callback);
 }
 
 function getRegistrationForm(request, response) {
@@ -14,14 +20,17 @@ function getRegistrationForm(request, response) {
 }
 
 function login(request, response) {
-  User.authenticate(request.body.email, request.body.password, (result, id) => {
+  
+  function callback(result, id) {
     if (result === true) {
       response.cookie('login', id);
       response.redirect('/');
     } else {
       response.redirect('/');
     };
-  });
+  };
+
+  User.authenticate(request.body.email, request.body.password, callback);
 }
 
 function logout (request, response) {
