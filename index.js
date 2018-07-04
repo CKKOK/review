@@ -18,10 +18,11 @@ app.use(cookieParser());
 const setupRoutesForTheExpressServer = require('./Routes');
 setupRoutesForTheExpressServer(app);
 
-// Handle the root route
+// The root route (homepage) requires functions from TWO models. This is for those who want to see how 'business logic' looks like, tying together data from multiple models to serve up something relevant to the user.
 const User = require('./ModelUser');
 const Task = require('./ModelTask');
 
+// Handle the root route
 app.get('/', (request, response) => {
   // If the user is logged in, find all tasks associated with the user...
   if (request.cookies['login']) {
