@@ -56,7 +56,7 @@ If you think you've gotten a grasp on how the information flows within this app,
 
 Once you're comfortable adding routes to the above exercise, here's a list of things you can choose to learn and work on.
 
-0. Move the controllers and models into appropriate folders to keep the root folder as clutter-free as possible. Make sure your app still works after that!
+0. Move the controllers and models into appropriate folders to keep the root folder as clutter-free as possible. Look also at the root handler function in `index.js`. That function should be in its own controller - is it supposed to be in the users controller? Or a tasks controller? The latter doesn't exist yet - create it if you have to. Make sure your app still works after all that!
 
 1. Pick up and use a CSS framework to style the views. Bootstrap knowledge is a must, but if you're already familiar with it, try Materialize or Semantic UI.
 
